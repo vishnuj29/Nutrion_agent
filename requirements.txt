@@ -1,0 +1,6 @@
+Flask
+python-dotenv
+groq
+pytesseract
+Pillow
+Flask-SQLAlchemy

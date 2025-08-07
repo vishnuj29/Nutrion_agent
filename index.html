@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Nutrition Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Smart AI Nutrition Assistant 🍽️</h1>
+        <form method="post" enctype="multipart/form-data">
+            <input type="text" name="dish" id="dish" placeholder="Enter a dish">
+            <button type="button" onclick="startListening()">🎤 Voice</button>
+            <input type="text" name="goal" placeholder="Your goal (e.g., lose weight)">
+            <input type="file" name="image" accept="image/*">
+            <textarea name="feedback" placeholder="Give feedback (e.g., I hate broccoli)"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+
+        {% if data.nutrition %}
+        <div class="result">
+            <h2>Nutrition Facts:</h2>
+            <p>{{ data.nutrition }}</p>
+        </div>
+        {% endif %}
+
+        {% if data.explanation %}
+        <div class="result">
+            <h2>Explanation:</h2>
+            <p>{{ data.explanation }}</p>
+        </div>
+        {% endif %}
+
+        {% if data.meal_plan %}
+        <div class="result">
+            <h2>Personalized Meal Plan:</h2>
+            <p>{{ data.meal_plan }}</p>
+        </div>
+        {% endif %}
+
+        {% if data.image_path %}
+        <div class="result">
+            <h2>Uploaded Image:</h2>
+            <img src="{{ url_for('static', filename=data.image_path.split('static/')[1]) }}" width="300">
+        </div>
+        {% endif %}
+
+        {% if data.feedback_history %}
+        <div class="result">
+            <h2>Recent Feedback History:</h2>
+            <ul>
+                {% for entry in data.feedback_history %}
+                <li><strong>{{ entry.dish }}</strong>: {{ entry.feedback }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>
